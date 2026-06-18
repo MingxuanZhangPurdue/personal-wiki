@@ -1,0 +1,7 @@
+# Treat PDFs and HTML captures as binary; don't try to diff them
+*.pdf binary
+*.html binary
+*.htm binary
+
+# Normalize line endings on markdown
+*.md text eol=lf
