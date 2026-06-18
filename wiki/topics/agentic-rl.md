@@ -3,7 +3,7 @@ type: topic
 slug: agentic-rl
 created: 2026-06-17
 updated: 2026-06-17
-source_count: 0
+source_count: 1
 ---
 
 # Agentic RL / Reinforcement Learning for Agents
@@ -24,7 +24,7 @@ _None yet._
 
 ## Sources
 
-_None yet._
+- [[../sources/2026-brown-skypilot-sandboxes]] — Brown (2026). _Tangential:_ sketches a GRPO code-gen RL loop where a sandbox cluster serves as the reward server (binary exit-code reward). Useful as an architectural reference, not a research result.
 
 ## Open questions
 
@@ -41,3 +41,4 @@ _None yet._
 ## Log
 
 - 2026-06-17: created (stub)
+- 2026-06-17: added [[../sources/2026-brown-skypilot-sandboxes]] (tangential — sandbox-as-reward-server pattern)

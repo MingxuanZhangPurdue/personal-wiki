@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git remote set-url:*)",
+      "Bash(curl:*)",
+      "WebFetch(domain:export.arxiv.org)",
+      "WebFetch(domain:arxiv.org)"
+    ]
+  }
+}
