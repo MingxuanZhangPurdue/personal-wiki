@@ -2,8 +2,8 @@
 type: topic
 slug: benchmarks
 created: 2026-06-17
-updated: 2026-06-17
-source_count: 2
+updated: 2026-06-18
+source_count: 4
 ---
 
 # Benchmarks
@@ -35,18 +35,41 @@ Pattern reinforcement: DeLM, like MACU, leans heavily on **pass@k as a baseline*
 
 Counter-pattern: DeLM's main results live on **established** benchmarks (SWE-bench Verified, LongBench-v2). The closest thing to "the authors introduce their own benchmark" is the OOLONG check, which is a smaller secondary eval. This is a cleaner empirical setup than MACU's Odysseys-centered headline.
 
+[[../sources/2026-lee-meta-harness]] adds a third cluster spanning three very different domains:
+
+| Benchmark              | Domain                            | Horizon            | Notes |
+| ---------------------- | --------------------------------- | ------------------ | ----- |
+| USPTO-50k              | Online patent classification      | Single-shot (streamed) | One of 3 datasets in the text-classification track; tests context management under streaming labels |
+| Symptom2Disease        | Symptom → disease classification  | Single-shot (streamed) | Held-out test split used for OOD-from-search |
+| LawBench (classification subset) | Legal-text classification | Single-shot (streamed) | Round-robin with USPTO-50k + Symptom2Disease for search-set construction |
+| IMO-AnswerBench        | IMO-style math QA (numeric answer)| Single-shot        | Math-reasoning headline benchmark; 200 problems held out for final eval |
+| IMO-ProofBench         | IMO-style math QA (proof)         | Single-shot        | Same family, harder eval mode (proof grading) |
+| ArXivMath              | Retrieved-context math reasoning  | Single-shot        | Corpus is arXiv math papers; tests retrieval-augmented reasoning |
+| TerminalBench-2        | Long-horizon agentic coding       | **Long**           | 89 terminal/coding tasks; used as both search set and final eval (acknowledged compromise) |
+
+Patterns reinforced and extended:
+
+- **TerminalBench-2 is now a recurring eval target — promoted to its own entity page.** First seen in MACU as a baseline-comparison context; now appears as the primary eval target in *two* successive papers ([[../sources/2026-lee-meta-harness|Meta-Harness]] reporting Haiku 4.5 37.6% vs Claude Code 27.5%, +10 pp; [[../sources/2026-zhang-self-harness|Self-Harness]] reporting 14–21 pp held-out gains across three mid-tier models from a minimal initial harness). Promoted to [[../entities/terminalbench-2]] for cross-source comparison. **Cross-source comparability warning** lives on the entity page: Meta-Harness uses the full 89-task set, Self-Harness uses a 64-task filtered subset.
+- **"Discovery problem" framing as a recurring compromise.** Meta-Harness treats TerminalBench-2 as both search set and final eval and defends it on cost grounds + regex audit of task-string leakage. Self-Harness instead splits the 64-case subset 50/50 into held-in and held-out and evaluates both every round — a stricter setup for the same benchmark. Worth tagging as the design axis to watch for harness-search papers: same-set discovery vs in-loop held-out split.
+- **Cross-model OOD eval as a stronger generalization claim.** Meta-Harness's math-reasoning results hold out **5 base models** (GPT-5.4-nano/mini, Gemini-3.1-Flash-Lite, Gemini-3-Flash, plus the search-time GPT-OSS-20B) and **200 problems**. This is a cleaner test of "the discovered structure is model-agnostic" than the more common "fix the base model, hold out the test split." Self-Harness deliberately *doesn't* test cross-model transfer because its claim is the opposite — that discovered harnesses are model-specific.
+- **Online text classification as a benchmark family.** USPTO-50k + Symptom2Disease + LawBench is a new (to this wiki) cluster — streamed-input classification where context-management strategy matters more than raw reasoning. Worth tracking whether other papers re-use this triple.
+
 ## Key concepts
 
 _None yet._
 
 ## Key entities
 
-_Individual benchmarks live in `wiki/entities/` with `kind: benchmark`. Candidates pending promotion: OSWorld, Online-Mind2Web, WebTailBench, Odysseys._
+- [[../entities/terminalbench-2]] — TerminalBench-2.0 (first entity-page promotion; appears across 3 sources).
+
+_Other candidates pending promotion: OSWorld, Online-Mind2Web, WebTailBench, Odysseys, IMO-AnswerBench, SWE-bench Verified._
 
 ## Sources
 
 - [[../sources/2026-koh-multi-agent-computer-use]] — Koh et al. (2026). Evaluated on OSWorld + Online-Mind2Web + WebTailBench + Odysseys; introduced **Odysseys** (long-horizon web).
 - [[../sources/2026-mao-decentralized-mas-shared-context]] — Mao & Mirhoseini (2026). Evaluated on SWE-bench Verified + LongBench-v2 Multi-Doc QA + OOLONG; uses pass@k against single-agent baselines and reports cost-per-task alongside accuracy.
+- [[../sources/2026-lee-meta-harness]] — Lee et al. (2026). Evaluated on USPTO-50k + Symptom2Disease + LawBench (online text classification), IMO-AnswerBench + IMO-ProofBench + ArXivMath (math reasoning with cross-model OOD), and [[../entities/terminalbench-2|TerminalBench-2]] (agentic coding, treated as a "discovery problem" with both search and eval on the same 89-task set).
+- [[../sources/2026-zhang-self-harness]] — Zhang et al. (2026). Evaluated solely on [[../entities/terminalbench-2|TerminalBench-2]] (64-case filtered subset, excluding multimodal-input and unstable-network tasks); 50/50 held-in/held-out split inside the optimization loop. Reports held-out pass rates as the headline metric.
 
 ## Open questions
 
@@ -64,3 +87,5 @@ _Individual benchmarks live in `wiki/entities/` with `kind: benchmark`. Candidat
 - 2026-06-17: created (stub)
 - 2026-06-17: added [[../sources/2026-koh-multi-agent-computer-use]]; added computer-use benchmark zoo table; noted "new architecture + new benchmark" pattern
 - 2026-06-17: added [[../sources/2026-mao-decentralized-mas-shared-context]]; added text/code benchmark table (SWE-bench Verified, LongBench-v2, OOLONG); flagged pass@k-as-baseline as converging community norm
+- 2026-06-18: added [[../sources/2026-lee-meta-harness]]; added text-classification + math-reasoning + agentic-coding benchmark cluster (TerminalBench-2, IMO-AnswerBench family, USPTO-50k / Symptom2Disease / LawBench); flagged "discovery problem" framing as a known compromise for harness-search papers; added TerminalBench-2 and IMO-AnswerBench as entity-promotion candidates
+- 2026-06-18: added [[../sources/2026-zhang-self-harness]] as 3rd TerminalBench-2 source; promoted TerminalBench-2 to first entity page [[../entities/terminalbench-2]]; added Self-Harness's 50/50 held-in/held-out split as the stricter counterpoint to Meta-Harness's same-set "discovery problem" framing
