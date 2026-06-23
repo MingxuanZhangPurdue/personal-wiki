@@ -186,3 +186,27 @@ Follow-ups suggested:
 - Watch for a 4th source with a clean isolating ablation to land the load-bearing-quality-knob synthesis page
 - Read ACE (still pending from Meta-Harness ingest) — referenced in both papers' baselines
 - Track DeepAgent SDK (Self-Harness's underlying framework) as a potential entity candidate alongside Claude Code
+
+
+## [2026-06-18] ingest | Building Social World Models with Large Language Models
+
+Ingested Yu, Zhao, Lin, You (2026), arXiv:2606.11482, ICML 2026. **First off-axis source in the wiki** — not an agent / harness paper but a social-forecasting / world-model paper, included because of the (state, event, next-state) transition framing and its oracle-substitution ablation. Light depth per user request (TL;DR + key ideas + 1 result + criticisms, no My take). User-directed: create only `social-world-models` topic stub, defer all entity promotions (SWM-Bench / Polymarket / Kalshi). Files touched:
+
+- Created `raw/papers/2026-yu-social-world-models/source.md` (metadata + BibTeX + verbatim citation)
+- Created [[sources/2026-yu-social-world-models]] — light-depth summary: TL;DR, 7 key ideas (SWM formulation `P(s_{t+1}|s_t,e_t)`, latent attribution Z_t, posterior-guided distillation / loose ELBO with frozen variational, Bradley-Terry/Luce attribution construction, precision-coverage tradeoff in posterior LLM size, SWM-Bench construction with Z-score sub-sampling, explicit A1/A2 assumptions), 2 result claims (8B SWM matches/beats GPT-5.5 on directional accuracy; oracle ablation shows attribution is the bottleneck not transition), 6 criticisms (spurious attribution, simulation failures on macro events, conditional exogeneity violation on reflexive markets, no held-out venue/time split, loose ELBO, first-order event approximation). No My take section per user direction.
+- Created [[topics/social-world-models]] — **new topic stub**. Hub definition (transition models over social state — prediction markets, polls, sentiment), Current understanding capturing 5 observations (transition-not-question framing, latent attribution as variable, posterior-guided distillation recipe, attribution-as-binding-constraint, reflexivity hazard). Empty Key concepts / Key entities (candidates noted). 5 open questions framed against the open research surface.
+- Updated [[topics/evaluation]] — source_count 4 -> 5; added **oracle-substitution ablation as upper-bound attribution diagnostic** as a new evaluation primitive complementary to module-removal ablation. Framed the SWM paper as off-axis but contributing one transferable idea.
+- Updated [[topics/benchmarks]] — source_count 4 -> 5; added prediction-market transition cluster (SWM-Bench Polymarket 10,188 + Kalshi 2,601 triples) as the **first non-agent-task benchmark cluster** in the wiki; flagged Z-score sub-sampling as standard hygiene for event-driven state-change benchmarks; flagged absence of held-out venue / time-window split as evaluation gap; added SWM-Bench / Polymarket / Kalshi to entity-promotion candidates (deferred).
+- Updated [[index]] — sources 6 -> 7, topics 11 -> 12 (added `social-world-models`); source counts on touched topics bumped (evaluation 4 -> 5, benchmarks 4 -> 5); last-touched note updated; SWM paper added under Papers.
+
+Key takeaways:
+- **First off-axis source.** The wiki has so far clustered tightly around LLM agents / harnesses / evaluation; this is a forecasting / world-model paper. Kept in scope because the (state, event, next-state) eval format and the oracle-substitution ablation are likely to recur.
+- **Attribution-as-bottleneck.** The oracle ablation cleanly localizes the binding constraint: the small transition model is already strong; what holds it back is the prior attributor (which contracts an event is about). This is a clean diagnostic primitive worth tracking.
+- **Posterior-guided distillation with a frozen variational** gives a loose ELBO but is tractable on small open models. Whether tightening the bound (partial variational fine-tuning, iterative refinement) helps is open.
+- **Honest limitations.** Authors flag spurious attribution (BTC<->ETH residual correlation), simulation under-reaction on macro events (weak-yen), and reflexive markets (news referencing market odds violates conditional exogeneity).
+
+Follow-ups suggested:
+- Promote SWM-Bench, Polymarket, Kalshi to entity pages on second source reference.
+- Watch for a second social-world-models source; if none lands soon, this topic risks orphan status.
+- Look for held-out-venue / held-out-time-window follow-up evaluation of SWM-Bench numbers.
+- Whether oracle-substitution ablation as a diagnostic primitive shows up in agent-systems literature (it should — same shape as DeLM removing its admission verifier, but using a stronger oracle in place rather than removing).

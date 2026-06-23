@@ -3,7 +3,7 @@ type: topic
 slug: benchmarks
 created: 2026-06-17
 updated: 2026-06-18
-source_count: 4
+source_count: 5
 ---
 
 # Benchmarks
@@ -54,6 +54,20 @@ Patterns reinforced and extended:
 - **Cross-model OOD eval as a stronger generalization claim.** Meta-Harness's math-reasoning results hold out **5 base models** (GPT-5.4-nano/mini, Gemini-3.1-Flash-Lite, Gemini-3-Flash, plus the search-time GPT-OSS-20B) and **200 problems**. This is a cleaner test of "the discovered structure is model-agnostic" than the more common "fix the base model, hold out the test split." Self-Harness deliberately *doesn't* test cross-model transfer because its claim is the opposite — that discovered harnesses are model-specific.
 - **Online text classification as a benchmark family.** USPTO-50k + Symptom2Disease + LawBench is a new (to this wiki) cluster — streamed-input classification where context-management strategy matters more than raw reasoning. Worth tracking whether other papers re-use this triple.
 
+[[../sources/2026-yu-social-world-models]] adds a benchmark cluster that is **off the agent-task axis entirely** — prediction-market transitions:
+
+| Benchmark              | Domain                                  | Horizon            | Notes |
+| ---------------------- | --------------------------------------- | ------------------ | ----- |
+| SWM-Bench (Polymarket) | Prediction-market state transitions     | Single-step        | 10,188 (state, news, next-state) triples; Dec 2022–Jan 2026 |
+| SWM-Bench (Kalshi)     | Prediction-market state transitions     | Single-step        | 2,601 triples; same window; macro/policy-heavy contracts |
+
+Patterns to note for this off-axis cluster:
+
+- **First benchmark in the wiki where the eval unit is a (state, event, next-state) transition triple rather than a (prompt, gold) pair or an agentic task rollout.** Closer in spirit to world-model evals in RL/video than to agent benchmarks.
+- **Z-score sub-sampling to remove flat-day bias** — transitions where nothing moves are downweighted so the eval isn't dominated by trivial no-event days. Worth tracking as a standard hygiene step for any "events drive state changes" benchmark.
+- **No held-out venue or held-out time-window split reported.** Headline numbers (8B SWM vs GPT-5.5) are on the same distribution the model was trained on. Distribution-shift evaluation is a clean follow-up gap.
+- **SWM-Bench, Polymarket, Kalshi all candidates for entity promotion** but deferred per user direction for this ingest.
+
 ## Key concepts
 
 _None yet._
@@ -62,7 +76,7 @@ _None yet._
 
 - [[../entities/terminalbench-2]] — TerminalBench-2.0 (first entity-page promotion; appears across 3 sources).
 
-_Other candidates pending promotion: OSWorld, Online-Mind2Web, WebTailBench, Odysseys, IMO-AnswerBench, SWE-bench Verified._
+_Other candidates pending promotion: OSWorld, Online-Mind2Web, WebTailBench, Odysseys, IMO-AnswerBench, SWE-bench Verified, SWM-Bench, Polymarket, Kalshi._
 
 ## Sources
 
@@ -70,6 +84,7 @@ _Other candidates pending promotion: OSWorld, Online-Mind2Web, WebTailBench, Ody
 - [[../sources/2026-mao-decentralized-mas-shared-context]] — Mao & Mirhoseini (2026). Evaluated on SWE-bench Verified + LongBench-v2 Multi-Doc QA + OOLONG; uses pass@k against single-agent baselines and reports cost-per-task alongside accuracy.
 - [[../sources/2026-lee-meta-harness]] — Lee et al. (2026). Evaluated on USPTO-50k + Symptom2Disease + LawBench (online text classification), IMO-AnswerBench + IMO-ProofBench + ArXivMath (math reasoning with cross-model OOD), and [[../entities/terminalbench-2|TerminalBench-2]] (agentic coding, treated as a "discovery problem" with both search and eval on the same 89-task set).
 - [[../sources/2026-zhang-self-harness]] — Zhang et al. (2026). Evaluated solely on [[../entities/terminalbench-2|TerminalBench-2]] (64-case filtered subset, excluding multimodal-input and unstable-network tasks); 50/50 held-in/held-out split inside the optimization loop. Reports held-out pass rates as the headline metric.
+- [[../sources/2026-yu-social-world-models]] — Yu et al. (2026). Off-axis: introduces SWM-Bench, a (state, event, next-state) transition benchmark over Polymarket (10,188 triples) + Kalshi (2,601 triples), Dec 2022–Jan 2026. First non-agent-task benchmark in this wiki. Uses Z-score sub-sampling to remove flat-day bias. No held-out venue or time-window split reported.
 
 ## Open questions
 
@@ -89,3 +104,4 @@ _Other candidates pending promotion: OSWorld, Online-Mind2Web, WebTailBench, Ody
 - 2026-06-17: added [[../sources/2026-mao-decentralized-mas-shared-context]]; added text/code benchmark table (SWE-bench Verified, LongBench-v2, OOLONG); flagged pass@k-as-baseline as converging community norm
 - 2026-06-18: added [[../sources/2026-lee-meta-harness]]; added text-classification + math-reasoning + agentic-coding benchmark cluster (TerminalBench-2, IMO-AnswerBench family, USPTO-50k / Symptom2Disease / LawBench); flagged "discovery problem" framing as a known compromise for harness-search papers; added TerminalBench-2 and IMO-AnswerBench as entity-promotion candidates
 - 2026-06-18: added [[../sources/2026-zhang-self-harness]] as 3rd TerminalBench-2 source; promoted TerminalBench-2 to first entity page [[../entities/terminalbench-2]]; added Self-Harness's 50/50 held-in/held-out split as the stricter counterpoint to Meta-Harness's same-set "discovery problem" framing
+- 2026-06-18: added [[../sources/2026-yu-social-world-models]] as 5th source (off-axis); added SWM-Bench (Polymarket + Kalshi prediction-market transitions) as first non-agent-task benchmark cluster; added SWM-Bench / Polymarket / Kalshi to entity-promotion candidates (deferred)

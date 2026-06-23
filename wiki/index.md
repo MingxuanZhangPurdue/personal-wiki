@@ -1,12 +1,12 @@
 # Wiki Index
 
 > Catalog of every page in the wiki. **Read this first when answering a query.**
-> Maintained by Claude per [`CLAUDE.md`](../CLAUDE.md). Last touched: 2026-06-18 (Zhang et al. Self-Harness paper ingest; first entity-page promotion).
+> Maintained by Claude per [`CLAUDE.md`](../CLAUDE.md). Last touched: 2026-06-18 (Yu et al. Social World Models paper ingest; first off-axis source).
 
 ## Counts
 
-- Sources: 6
-- Topics: 11 (mostly stubs)
+- Sources: 7
+- Topics: 12 (mostly stubs)
 - Concepts: 0
 - Entities: 1
 - Synthesis pages: 0
@@ -23,11 +23,12 @@ _Hubs that group sources, concepts, and entities by theme. Stubs seeded; populat
 - [[topics/rag]] — retrieval-augmented generation, naive/hybrid/agentic RAG, long-context trade-offs (2 sources)
 - [[topics/agent-harness]] — scaffolding around LLMs: control loops, tools, planning, recovery (4 sources)
 - [[topics/sandbox]] — isolated execution environments (containers, microVMs, browser sandboxes) (2 sources)
-- [[topics/evaluation]] — how to measure agent/LLM quality (process metrics, LLM-as-judge, contamination) (4 sources)
-- [[topics/benchmarks]] — specific task suites (SWE-bench, GAIA, WebArena, OSWorld, etc.) (4 sources)
+- [[topics/evaluation]] — how to measure agent/LLM quality (process metrics, LLM-as-judge, contamination) (5 sources)
+- [[topics/benchmarks]] — specific task suites (SWE-bench, GAIA, WebArena, OSWorld, etc.) (5 sources)
 - [[topics/computer-use]] — agents that drive a real desktop/browser via screenshots + mouse/keyboard (1 source)
 - [[topics/multi-agent-coordination]] — topologies (centralized vs decentralized), communication substrate, validation, plan structure (2 sources)
 - [[topics/careers]] — ML/AI hiring funnels, interview prep, compensation, negotiation, career mechanics (1 source)
+- [[topics/social-world-models]] — transition models `P(s_{t+1}|s_t,e_t)` over social state (prediction markets, polls, sentiment); news as the event signal (1 source)
 
 <!-- format: - [[topics/<slug>]] — one-line description (N sources) -->
 
@@ -61,6 +62,7 @@ _Per-source summary pages. Each mirrors a folder under `raw/`._
 - [[sources/2026-mao-decentralized-mas-shared-context]] — Mao, Mirhoseini (2026). Decentralized Multi-Agent Systems with Shared Context. [read]
 - [[sources/2026-lee-meta-harness]] — Lee, Nair, Zhang, Lee, Khattab, Finn (2026). Meta-Harness: End-to-End Optimization of Model Harnesses. [read]
 - [[sources/2026-zhang-self-harness]] — Zhang, Zhang, Li, Zhang, Chen, Zhang, Bai, Hu (2026). Self-Harness: Harnesses That Improve Themselves. [read]
+- [[sources/2026-yu-social-world-models]] — Yu, Zhao, Lin, You (2026). Building Social World Models with Large Language Models. [read]
 
 <!-- format: - [[sources/<slug>]] — Authors (Year). Title. [status] -->
 
